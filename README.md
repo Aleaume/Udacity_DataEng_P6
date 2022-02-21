@@ -53,6 +53,17 @@ DWH_NUM_NODES	| 4
 DWH_NODE_TYPE	| dc2.large
 DWH_CLUSTER_IDENTIFIER	| dwhCluster
 
+
+
+## Step 1: Scope the Project & Gather Data
+
+### Scope
+The scope of this project is readily compile and join those disparate datasets in a functional single point of reference in order for data analyst and business users to be able to query it easily and efficiently. Scenarios such as targeted advertisement for foreign-tourist in the US could for example benefiting from the followin tool.
+Question such as "What port/city do immigrant get in from the most ?", or What are the top 10 landing airports for B2 visa holders ?
+  
+ In order to do so, the objective is to load all the below specified datasets in a central AWS Redshift DB. For that we first extract the data from the Udacity Workspace. Transfom it to our need, and then load it to tailored S3 buckets. Once done, we only need to load it to a Redshift DB.
+  
+
 ### Dataset
 There are 4 Datasets picked up from the Udacity ones and 1 created from info:
   
@@ -68,10 +79,13 @@ This data details the demographics in the US by city, including ethnicity, veter
   
 #### Airport Code Table
 This simple dataset, matches up airport codes & names with the cities there are located at.
-
-## Step 1: Scope the Project & Gather Data
+  
+#### immigration port
+This simple dataset I have created taken fron the Description file of the I94 Data, is helping to map out efficiently the I94port fields to the state and city corresponding
 
 ## Step 2: Explore and Assess the Data
+
+This step is detailed in the "Capstone Project.ipynb" document.
 
 ## Step 3: Define the Data Model
 
