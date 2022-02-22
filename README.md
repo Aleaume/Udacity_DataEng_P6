@@ -435,6 +435,29 @@ sql_count_immigration = "SELECT COUNT(*) FROM immigration;"
 
 ```
 
+```python
+
+def check_tables(cur, conn):
+    
+    """
+        Description: This function is responsible for checking that each tables are properly filled by counting them.
+
+        Arguments:
+            cur: the cursor object.
+            conn: xxx
+
+        Returns:
+            None
+    """
+    
+    for query in sql_counts:
+        cur.execute(query)
+        result=cursor.fetchone()
+        print(query+" result is : "+result)
+        conn.commit()
+
+```
+
 ### 4.3 Data dictionary
 
 ## Step 5: Complete Project Write Up
