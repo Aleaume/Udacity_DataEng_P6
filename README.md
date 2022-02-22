@@ -18,7 +18,7 @@ Once in AWS, the data is then copied over to a Redshift DWH to be ready to be co
 
 The project is composed of different cloud components and a few scripts working together as described in this diagram:
 
-<PICTURE ARCHITECTURE>
+< PICTURE ARCHITECTURE >
 
 #### The S3 Bucket
   
@@ -97,6 +97,24 @@ With this in mind I organozed data in the Redshift DB in a snowflake schema made
  < PICTURE OF DIAGRAM >
  
 ### Mapping out Data Pipelines
+
+In order to bring the above model to life, we need to go through the followin steps:
+
+1. First we need to make sure we have an up and running Redshift Cluster with TCP open on port 5439.
+As described previously we accomplish this thanks to a jupyter notebook.
+
+2.Then we need to make sure to create the tables needed.
+For this, we created a series of sql queries for each table defining its structure, in the file sql_queries.py
+
+```python
+
+```
+
+We then simply execute the script create_tables.py and can see in Redshift the empty tables beign created.
+
+NOTE: for the purpose of the exercise, the create_tables script also drops the tables before creating them. Making it easy for the development / implementation phase.
+
+< PICTURE OF LIST OF TABLES >
 
 ## Step 4: Run ETL to Model the Data
 
