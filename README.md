@@ -238,8 +238,118 @@ def create_spark_session():
 
 ```
 
-4. Step for if the central step were data cleaning & wrangling is done.
+4.This step is the central phase were data cleaning & wrangling is done.
 
+As previously detailed in the Capstone Project.ipynb, we have different cleaning & re-arranging functions applied to each dataset in order to meet the target of the detailed model & get rid of unnecessary data.
+
+5. Once data in the target form, we then load each datasets in an S3 bucket:
+
+```python
+
+csv_buffer = StringIO()
+df_us_airports.to_csv(csv_buffer,index=False)
+    
+s3_resource.put_object(Bucket=s3_bucket, Key='P6/output/airports/airports.csv',Body=csv_buffer.getvalue())
+
+
+```
+
+```python
+# write immigration table to parquet files in s3
+
+immigration_table.write.option("header",True).mode("overwrite").parquet(output_data+"immigration/")
+
+```
+
+6. Last step in this pipeline is then to load those datasets into our Redshift DB
+For this, we make again use of the sql_queries script where we defined for each table a copy command.
+
+```python
+
+# FILLING TABLES
+
+airport_copy = ("""
+copy airport from 's3://udacityexercisealeaume/P6/output/airports/airports.csv' 
+credentials 'aws_iam_role={}'
+region 'us-east-1'
+IGNOREHEADER 1
+CSV;
+""").format(ARN)
+
+cities_copy = ("""
+copy cities from 's3://udacityexercisealeaume/P6/output/demographics/cities.csv' 
+credentials 'aws_iam_role={}'
+region 'us-east-1'
+IGNOREHEADER 1
+CSV;
+""").format(ARN)
+
+population_copy = ("""
+copy population from 's3://udacityexercisealeaume/P6/output/demographics/population.csv' 
+credentials 'aws_iam_role={}'
+region 'us-east-1'
+IGNOREHEADER 1
+CSV;
+""").format(ARN)
+
+race_copy = ("""
+copy race from 's3://udacityexercisealeaume/P6/output/demographics/races.csv' 
+credentials 'aws_iam_role={}'
+region 'us-east-1'
+IGNOREHEADER 1
+CSV;
+""").format(ARN)
+
+immigration_port_copy = ("""
+copy immigration_port from 's3://udacityexercisealeaume/P6/output/immigration_port/immigration_port.csv' 
+credentials 'aws_iam_role={}'
+region 'us-east-1'
+IGNOREHEADER 1
+CSV;
+""").format(ARN)
+
+weather_copy = ("""
+copy weather from 's3://udacityexercisealeaume/P6/output/weather/weather.csv' 
+credentials 'aws_iam_role={}'
+region 'us-east-1'
+IGNOREHEADER 1
+CSV;
+""").format(ARN)
+
+immigration_copy = ("""
+copy immigration(entry_port,year,month,arrdate,depdate,mode,addr,birthyear,gender,occupation,airline,flightno,entdepa,entdepd,entdepu,matflag,visatype)
+from 's3://udacityexercisealeaume/P6/output/immigration/' 
+credentials 'aws_iam_role={}'
+format parquet SERIALIZETOJSON;
+""").format(ARN)
+
+
+```
+
+Those queries are then called in the etl.py script.
+
+
+```python
+
+def load_tables(cur, conn):
+    
+    """
+        Description: This function is responsible for reading the json file in the s3 bucket, and copyting the data in the staging tables
+
+        Arguments:
+            cur: the cursor object.
+            filepath: song data file path.
+
+        Returns:
+            None
+    """
+    
+    for query in copy_table_queries:
+        cur.execute(query)
+        conn.commit()
+
+
+```
 
 ## Step 4: Run ETL to Model the Data
 
