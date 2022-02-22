@@ -353,4 +353,59 @@ def load_tables(cur, conn):
 
 ## Step 4: Run ETL to Model the Data
 
+### 4.1 Create the Data Model
+
+As detailed previously the ETL pipeline once the Redhsift DB and its tables are created is all handled via the etl.py script.
+
+Here you can see the cut out of its steps from the main():
+
+```python
+
+def main():
+    
+    """
+    Description: This main function is responsible for calling all functions previously defined in order.
+                    This also where we can define the the input & output s3 locations.
+    
+    Arguments:
+        None
+        
+    Returns:
+        None
+    """
+    
+    s3_bucket = "udacityexercisealeaume"
+    
+    year =2016
+    month=05
+    
+    s3_resource = boto3.client('s3')
+    spark = create_spark_session()
+    
+    config = configparser.ConfigParser()
+    config.read('dl.cfg')
+
+    os.environ['AWS_ACCESS_KEY_ID']=config['AWS_AdminFull']['AWS_ACCESS_KEY_ID']
+    os.environ['AWS_SECRET_ACCESS_KEY']=config['AWS_AdminFull']['AWS_SECRET_ACCESS_KEY']
+
+    conn = psycopg2.connect("host={} dbname={} user={} password={} port={}".format(*config['CLUSTER'].values()))
+    cur = conn.cursor()
+    
+    
+    
+    output_data = "s3a://udacityexercisealeaume/P6/output/"
+    
+    process_airports_data(s3_resource,s3_bucket)
+    process_cities_data(s3_resource,s3_bucket)
+    process_weather_data(s3_resource,s3_bucket)
+    process_immigration_data(spark,output_data,s3_resource,s3_bucket,month,year)
+    
+    load_tables(cur, conn)
+
+
+```
+### 4.2 Data Quality Checks
+
+
+
 ## Step 5: Complete Project Write Up
