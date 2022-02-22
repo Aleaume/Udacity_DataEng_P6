@@ -100,10 +100,10 @@ With this in mind I organozed data in the Redshift DB in a snowflake schema made
 
 In order to bring the above model to life, we need to go through the followin steps:
 
--1 First we need to make sure we have an up and running Redshift Cluster with TCP open on port 5439.
+1. First we need to make sure we have an up and running Redshift Cluster with TCP open on port 5439.
 As described previously we accomplish this thanks to a jupyter notebook.
 
--2 Then we need to make sure to create the tables needed.
+2. Then we need to make sure to create the tables needed.
 For this, we created a series of sql queries for each table defining its structure, in the file sql_queries.py
 
 ```python
@@ -198,6 +198,48 @@ immigration_port_table_drop = "DROP table IF EXISTS immigration_port"
 weather_table_drop = "DROP table IF EXISTS weather"
 
 ```
+3. Next step is to then extract the data
+In this scenario we assume data is stored in the Workspace of Udacity. Depending on the file type we either load the data in a spark dataframe for SAS7BDAT files or load the csv files in respective pandas dataframes.
+
+```python 
+fname = 'airport-codes_csv.csv'
+    df = pd.read_csv(fname)
+    
+```
+
+```pthon
+
+df_spark = spark.read.format('com.github.saurfang.sas.spark')\
+                        .load('../../data/18-83510-I94-Data-{}/i94_{}{}_sub.sas7bdat'\
+                        .format(year,lower(calendar.month_name[month]),time.strftime("%y",year)))
+
+```
+
+NOTE: in order to pick up SAS7BDAT files with Spark we need laod the appropriate library, in our ETL pipeline, we define a purposefull function dedicated to create the spark session with needed libraries and return it.
+
+```python
+
+def create_spark_session():
+
+    """
+    Description: This function is responsible for initiating the Spark session with aws haddop package.
+    Arguments:
+    Returns:
+        spark: the initiated spark session.
+    """
+        
+    spark = SparkSession \
+        .builder \
+        .config("spark.jars.repositories", "https://repos.spark-packages.org/") \
+        .config("spark.jars.packages", "saurfang:spark-sas7bdat:3.0.0-s_2.11,org.apache.hadoop:hadoop-aws:2.7.2") \
+        .getOrCreate()
+  
+    return spark
+
+```
+
+4. Step for if the central step were data cleaning & wrangling is done.
+
 
 ## Step 4: Run ETL to Model the Data
 
