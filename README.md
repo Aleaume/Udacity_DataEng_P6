@@ -94,7 +94,7 @@ This step is detailed in the "Capstone Project.ipynb" document.
 In order to offer the best flexibility to data consumers and data analysts, we need to set out a performant model capable to reach the table needed in maximum 3 joins.
 With this in mind I organozed data in the Redshift DB in a snowflake schema made of Fact and dimesion tables as detailed in the diagram below:
   
- < PICTURE OF DIAGRAM >
+![image](https://user-images.githubusercontent.com/32632731/155182454-d2356e7f-ac19-4487-8079-150103f8c708.png)
  
 ### Mapping out Data Pipelines
 
