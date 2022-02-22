@@ -458,6 +458,9 @@ def check_tables(cur, conn):
 
 ```
 
+![image](https://user-images.githubusercontent.com/32632731/155203735-55edd6b0-f31f-4bcb-859e-c78b91c4cf0f.png)
+
+
 ### 4.3 Data dictionary
 
 ## Step 5: Complete Project Write Up
