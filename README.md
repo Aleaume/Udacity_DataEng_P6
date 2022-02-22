@@ -406,6 +406,43 @@ def main():
 ```
 ### 4.2 Data Quality Checks
 
+#### Check that table have been created and print there schema
+In this check we want to make sure that all required tables have been created and we display its schemas for checking.
+This is typically ran after the create_tables.py script or at any stage when new table are created / edited.
 
+```python
+SELECT DISTINCT tablename FROM pg_table_def WHERE schemaname = 'public';
+
+```
+
+
+#### Check that table have been populated
+In this check we make sure that the tables contain data. This is a good data quality check once the pipeline has been run and before giving the go ahead for production / consumption of the data.
+
+
+```python
+
+sql_count_airport = "SELECT COUNT(*) FROM airport;"
+sql_count_cities = "SELECT COUNT(*) FROM cities"
+sql_count_population = "SELECT COUNT(*) FROM population;"
+sql_count_race = "SELECT COUNT(*) FROM race;"
+sql_count_immigration_port = "SELECT COUNT(*) FROM immigration_port;"
+sql_count_weather = "SELECT COUNT(*) FROM weather;"
+sql_count_immigration = "SELECT COUNT(*) FROM immigration;"
+
+```
+
+### 4.3 Data dictionary
 
 ## Step 5: Complete Project Write Up
+
+### Rationale for the choice of tools and technologies for the project.
+Propose how often the data should be updated and why.
+
+### Compley Scenarios
+
+#### The data was increased by 100x.
+
+#### The data populates a dashboard that must be updated on a daily basis by 7am every day.
+
+#### The database needed to be accessed by 100+ people.
