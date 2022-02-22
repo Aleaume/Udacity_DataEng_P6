@@ -467,9 +467,19 @@ def check_tables(cur, conn):
 ## Step 5: Complete Project Write Up
 
 ### Rationale for the choice of tools and technologies for the project.
-Propose how often the data should be updated and why.
+The above mentioned and used tool & technology stack for this project are certainly not the only possible way to go around to deliver the same performance and result, however here is what can justify the choices for the following:
 
-### Compley Scenarios
+- Apache Spark, versatile, and very performant with large dataset, this is a perfect choice for data wrangling the big immigration input. In a productive environment it can easily also be scaled up to accomodate larger files or process faster data.
+- AWS S3 bucket are a fine choice when looking for a unstructured storage place. In this project since we pick up different data format, a non-rigid strucutre offer flexibility and is great for scaling up. Similarly we could have made use of Azure Data Lake and its blobstorage.
+- AWS Redshift here comes as a perfect fit for the consumption of data. With great read / write performance and the possibility to scale up with addidng addtional nodes, this comes as a very reliable consumption / consumer facing storage place. With great compability with Business Intelligence tools, this makes it the perfect suit for this project. We can compare it to a very suitable other option that is Snowflake.
+
+
+### Propose how often the data should be updated and why.
+
+- Immigration data, from its nature as-is shall be updated monthly. Files in the source system as partition monthly so we can assume they are published on a monthly basis. Additionally, for business analysis purposes in marketing or promotional campaign there is no business need for a "freshest" data need.
+- Other dataset tend to be even less volatile. Airport & Demographics should only be updated when new data comes in (punctually) or data is updated (at demand). For weather, we can see temperature are given monthly in the source, hence a monthly update shall suffice.
+
+### Complex Scenarios
 
 #### The data was increased by 100x.
 
