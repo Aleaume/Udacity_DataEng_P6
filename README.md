@@ -108,13 +108,96 @@ For this, we created a series of sql queries for each table defining its structu
 
 ```python
 
+# CREATE TABLES
+
+airport_table_create= ("""CREATE TABLE IF NOT EXISTS airport(\
+                                cityState varchar,
+                                name varchar,
+                                local_code varchar,
+                                type varchar,
+                                coordinates varchar
+    )
+
+""")
+
+cities_table_create = ("""CREATE TABLE IF NOT EXISTS cities(\
+                    cityState varchar,\
+                    state_code varchar,\
+                    city varchar,\
+                    state_name varchar);
+
+""")
+
+population_table_create = ("""CREATE TABLE IF NOT EXISTS population(\
+                        cityState varchar, \
+                        median_age float, \
+                        male_population int,\
+                        female_population int,\
+                        total_population int,\
+                        number_veterans int,\
+                        foreign_born int,\
+                        avg_household_size float);
+""")
+
+race_table_create = ("""CREATE TABLE IF NOT EXISTS race(\
+                    cityState varchar,\
+                    race varchar,\
+                    count int);
+""")
+
+immigration_table_create = ("""CREATE TABLE IF NOT EXISTS immigration(\
+                    entry_port varchar,\
+                    year int,\
+                    month int,\
+                    arrdate timestamp,\
+                    depdate timestamp,\
+                    mode float,\
+                    addr varchar,\
+                    birthyear int,\
+                    gender varchar,\
+                    occupation varchar,\
+                    airline varchar,\
+                    flightno varchar,\
+                    entdepa varchar,\
+                    entdepd varchar,\
+                    entdepu varchar,\
+                    matflag varchar,\
+                    visatype varchar);
+""")
+
+immigration_port_table_create = ("""CREATE TABLE IF NOT EXISTS immigration_port(\
+                        cityState varchar,\
+                        country varchar,\
+                        immigration_code varchar);
+""")
+
+weather_table_create = ("""CREATE TABLE IF NOT EXISTS weather (\
+                    city varchar,\
+                    avgTemp float,\
+                    year int,\
+                    month int);
+""")
+
 ```
 
 We then simply execute the script create_tables.py and can see in Redshift the empty tables beign created.
 
+
+
 NOTE: for the purpose of the exercise, the create_tables script also drops the tables before creating them. Making it easy for the development / implementation phase.
 
-< PICTURE OF LIST OF TABLES >
+
+```python
+
+airport_table_drop = "DROP table IF EXISTS airport"
+cities_table_drop = "DROP table IF EXISTS cities"
+population_table_drop = "DROP table IF EXISTS population"
+race_table_drop = "DROP table IF EXISTS race"
+immigration_table_drop = "DROP table IF EXISTS immigration"
+immigration_port_table_drop = "DROP table IF EXISTS immigration_port"
+weather_table_drop = "DROP table IF EXISTS weather"
+
+```
 
 ## Step 4: Run ETL to Model the Data
 
