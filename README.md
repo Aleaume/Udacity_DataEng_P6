@@ -182,6 +182,7 @@ weather_table_create = ("""CREATE TABLE IF NOT EXISTS weather (\
 
 We then simply execute the script create_tables.py and can see in Redshift the empty tables beign created.
 
+![image](https://user-images.githubusercontent.com/32632731/155193692-e479a320-9af0-4139-a589-b57c03dbc677.png)
 
 
 NOTE: for the purpose of the exercise, the create_tables script also drops the tables before creating them. Making it easy for the development / implementation phase.
@@ -411,9 +412,11 @@ In this check we want to make sure that all required tables have been created an
 This is typically ran after the create_tables.py script or at any stage when new table are created / edited.
 
 ```python
-SELECT DISTINCT tablename FROM pg_table_def WHERE schemaname = 'public';
+SELECT tablename,"column",type FROM pg_table_def WHERE schemaname = 'public';
 
 ```
+
+![image](https://user-images.githubusercontent.com/32632731/155193564-30fb6b93-365f-4d35-ad76-e9549a55d7da.png)
 
 
 #### Check that table have been populated
