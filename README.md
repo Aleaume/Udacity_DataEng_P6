@@ -18,7 +18,7 @@ Once in AWS, the data is then copied over to a Redshift DWH to be ready to be co
 
 The project is composed of different cloud components and a few scripts working together as described in this diagram:
 
-<<PICTURE ARCHITECTURE>>
+<PICTURE ARCHITECTURE>
 
 #### The S3 Bucket
   
@@ -88,6 +88,15 @@ This simple dataset I have created taken fron the Description file of the I94 Da
 This step is detailed in the "Capstone Project.ipynb" document.
 
 ## Step 3: Define the Data Model
+
+### Conceptual Data Model
+
+In order to offer the best flexibility to data consumers and data analysts, we need to set out a performant model capable to reach the table needed in maximum 3 joins.
+With this in mind I organozed data in the Redshift DB in a snowflake schema made of Fact and dimesion tables as detailed in the diagram below:
+  
+ < PICTURE OF DIAGRAM >
+ 
+### Mapping out Data Pipelines
 
 ## Step 4: Run ETL to Model the Data
 
