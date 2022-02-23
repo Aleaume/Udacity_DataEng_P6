@@ -487,7 +487,16 @@ The above mentioned and used tool & technology stack for this project are certai
 ### Complex Scenarios
 
 #### The data was increased by 100x.
+In this scenario, the technology in used doesn't neeed to be replaced, Spark can handle large volume of data to be processed and so can Redshift. However in order to perform as well as the current project the capactities of the spark cluster can be fine tuned in order to add more nodes working in parallel on the data. A better monitoring and balancing of processing load would probably have to be set up and could be easily managed in HADOOP.
+Similarly for the Redshift DB some adjustments could be made:
+- Add more nodes to the cluster
+- After confirming with business, different layers of storage can be set up for "hot" data (needed to be available at any time very quickly) and for "cold" or "archived" data that could be set up in a parallel DB with less performance, saving costs.
 
 #### The data populates a dashboard that must be updated on a daily basis by 7am every day.
+In this scenario, the current setup could absolutely handle this constraint in terms of capacity. Even imagining that the immigration input would be published daily, an automated pipeline could be setup in order to pick up data overnight and apply the ETLs decribed in this project.
+However in order to ensure data is made available on-time for this dashboard a Workflow management tool could be implemented such as Apache Airflow.
+We could imagine also those different ETL steps being cutout in different workflow DAGs each of them logging but also trigerring email notifications to Admin & Business of respectively error runs & as expected runs.
+
 
 #### The database needed to be accessed by 100+ people.
+Again, in this scenario the current technology stack could handle the charge. However it could be useful to duplicate the DB facing the customer and implemnt load balancing in order to improve reach & read performances for customers / dashboards. If needed also, similar to the 1st scenario we can add more nodes to the Redshift cluster in order to parallelize the queries from customers.
