@@ -1,0 +1,45 @@
+source,tablename,type,column,description
+airport-code.csv,airport,character varying(256),citystate,synthetic identifier created from the city and the state
+airport-code.csv,airport,character varying(256),name,name of the airport
+airport-code.csv,airport,character varying(256),local_code,unique identifier of the airport (not IATA code)
+airport-code.csv,airport,character varying(256),type,"type of airport (heli, commercial, large,…)"
+airport-code.csv,airport,character varying(256),coordinates,longitude and latitude of the airport location
+us-cities-demogrpahics.csv,cities,character varying(256),citystate,synthetic identifier created from the city and the state
+us-cities-demogrpahics.csv,cities,character varying(256),state_code,2 letters abbreviation of the state of the city
+us-cities-demogrpahics.csv,cities,character varying(256),city,City name
+us-cities-demogrpahics.csv,cities,character varying(256),state_name,Full name of the state of the city
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),entry_port,3 characters code indicating the port of arrival & processing
+i94_{month}{year}_sub.sas7bdat,immigration,integer,year,year of scope of the immigration collected
+i94_{month}{year}_sub.sas7bdat,immigration,integer,month,month of scope of the immigration collected
+i94_{month}{year}_sub.sas7bdat,immigration,timestamp without time zone,arrdate,arrival data of alien
+i94_{month}{year}_sub.sas7bdat,immigration,timestamp without time zone,depdate,departure date of alien
+i94_{month}{year}_sub.sas7bdat,immigration,double precision,mode,1 numeric value indicating the transport mode of arrival
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),addr,State code where the alien will reside
+i94_{month}{year}_sub.sas7bdat,immigration,integer,birthyear,year of birth of the alien
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),gender,gender of the alien
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),occupation,occupation of the alien
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),airline,airline of the arrival flight
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),flightno,flight number of the arrival fligjt
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),entdepa,Arrival Flag - admitted or paroled into the U.S.
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),entdepd,"Departure Flag - Departed, lost I-94 or is deceased"
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),entdepu,"Update Flag - Either apprehended, overstayed, adjusted to perm residence"
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),matflag,Match flag - Match of arrival and departure records
+i94_{month}{year}_sub.sas7bdat,immigration,character varying(256),visatype,Class of admission legally admitting the non-immigrant to temporarily stay in U.S.
+immigration_port.csv,immigration_port,character varying(256),citystate,synthetic identifier created from the city and the state
+immigration_port.csv,immigration_port,character varying(256),country,country of location of port
+immigration_port.csv,immigration_port,character varying(256),immigration_code,3 characters code indicating the port
+us-cities-demogrpahics.csv,population,character varying(256),citystate,synthetic identifier created from the city and the state
+us-cities-demogrpahics.csv,population,double precision,median_age,median age of the population of the city
+us-cities-demogrpahics.csv,population,integer,male_population,male population of the city
+us-cities-demogrpahics.csv,population,integer,female_population,female population of the city
+us-cities-demogrpahics.csv,population,integer,total_population,total population of the city
+us-cities-demogrpahics.csv,population,integer,number_veterans,number of  veterans of the city
+us-cities-demogrpahics.csv,population,integer,foreign_born,number of foreign born of the city
+us-cities-demogrpahics.csv,population,double precision,avg_household_size,avg household size of the population of the city
+us-cities-demogrpahics.csv,race,character varying(256),citystate,synthetic identifier created from the city and the state
+us-cities-demogrpahics.csv,race,character varying(256),race,ethnicity category name
+us-cities-demogrpahics.csv,race,integer,count,number of individual belonging to the ethnicity
+weather.csv,weather,character varying(256),city,City name
+weather.csv,weather,double precision,avgtemp,average temperature measured
+weather.csv,weather,integer,year,year of measurement
+weather.csv,weather,integer,month,month of measurement
