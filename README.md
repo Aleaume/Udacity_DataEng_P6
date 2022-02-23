@@ -18,7 +18,8 @@ Once in AWS, the data is then copied over to a Redshift DWH to be ready to be co
 
 The project is composed of different cloud components and a few scripts working together as described in this diagram:
 
-< PICTURE ARCHITECTURE >
+![Udacity_Architecture_P6](https://user-images.githubusercontent.com/32632731/155270875-02d11884-84b0-4862-8266-a385f8cb9620.jpg)
+
 
 #### The S3 Bucket
   
