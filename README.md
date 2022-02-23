@@ -465,6 +465,10 @@ def check_tables(cur, conn):
 
 ### 4.3 Data dictionary
 
+
+![image](https://user-images.githubusercontent.com/32632731/155274507-b2562db0-738b-46db-91a3-2f9692531f8b.png)
+
+
 ## Step 5: Complete Project Write Up
 
 ### Rationale for the choice of tools and technologies for the project.
