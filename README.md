@@ -543,7 +543,18 @@ Once all checks are passed we can finally control & make sure the new DB and its
 
 #### What port/city do immigrant get in from the most ?
 
+```sql
 
+SELECT i.entry_port, COUNT(i.entry_port), p.city, p.state_code
+FROM immigration AS i
+LEFT JOIN immigration_port AS p ON i.entry_port = p.immigration_code
+GROUP BY i.entry_port, p.city, p.state_code
+ORDER BY count(distinct i.entry_port) DESC
+LIMIT 10
+
+```
+
+![image](https://user-images.githubusercontent.com/32632731/155584973-3771c44f-b6c0-4301-9869-a59e6bf04934.png)
 
 
 #### What are the top 10 landing airports for B2 visa holders ?
