@@ -438,7 +438,6 @@ sql_count_immigration = "SELECT COUNT(*) FROM immigration;"
 ```
 
 ```python
-
 def check_tables(cur, conn):
     
     """
@@ -446,22 +445,39 @@ def check_tables(cur, conn):
 
         Arguments:
             cur: the cursor object.
-            conn: xxx
+            conn: connection string
 
         Returns:
             None
     """
+    i = 0
     
     for query in sql_counts:
         cur.execute(query)
-        result=cursor.fetchone()
-        print(query+" result is : "+result)
+        
+        query = query.split()
+        word = query[-1]
+        table_name = word[:-1]
+        
+        result=cur.fetchone()
+        
+        if result[0] > 0:
+            print(table_name+" passed quality check for empty table.")
+            i+=1
+        else:
+            print(table_name+ " failed quality check for empty table. The table is empty")
+        
         conn.commit()
+    
+    if i==len(sql_counts):
+        return True
+    else:
+        return False
+
 
 ```
 
-![image](https://user-images.githubusercontent.com/32632731/155203735-55edd6b0-f31f-4bcb-859e-c78b91c4cf0f.png)
-
+![image](https://user-images.githubusercontent.com/32632731/155569786-ee6887d1-13ef-464d-bd70-14233a8d33c0.png)
 
 ### 4.3 Data dictionary
 
