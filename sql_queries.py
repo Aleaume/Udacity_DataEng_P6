@@ -146,6 +146,14 @@ credentials 'aws_iam_role={}'
 format parquet SERIALIZETOJSON;
 """).format(ARN)
 
+check_exist_airport = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'airport');"
+check_exist_cities = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'cities');"
+check_exist_population = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'population');"
+check_exist_race = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'race');"
+check_exist_immigration_port = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'immigration_port');"
+check_exist_weather = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'weather');"
+check_exist_immigration = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'immigration');"
+
 
 
 sql_count_airport = "SELECT COUNT(*) FROM airport;"
@@ -156,6 +164,14 @@ sql_count_immigration_port = "SELECT COUNT(*) FROM immigration_port;"
 sql_count_weather = "SELECT COUNT(*) FROM weather;"
 sql_count_immigration = "SELECT COUNT(*) FROM immigration;"
 
+top_port_query = "SELECT i.entry_port, COUNT(i.entry_port), p.city, p.state_code \
+                    FROM immigration AS i \
+                    LEFT JOIN immigration_port AS p ON i.entry_port = p.immigration_code \
+                    GROUP BY i.entry_port, p.city, p.state_code \
+                    ORDER BY count(distinct i.entry_port) DESC\
+                    LIMIT 10;
+"
+
 #SOURCE / HELP : for timestamp conversion, https://stackoverflow.com/questions/39815425/how-to-convert-epoch-to-datetime-redshift + discussions in udacity forum 
 
 # QUERY LISTS
@@ -164,3 +180,4 @@ create_table_queries = [airport_table_create,cities_table_create,population_tabl
 drop_table_queries = [airport_table_drop,cities_table_drop,population_table_drop,race_table_drop,immigration_table_drop,immigration_port_table_drop,weather_table_drop]
 copy_table_queries = [airport_copy,cities_copy,population_copy,race_copy,immigration_port_copy,weather_copy,immigration_copy]
 sql_counts = [sql_count_airport, sql_count_cities, sql_count_population, sql_count_race, sql_count_immigration_port, sql_count_weather, sql_count_immigration]
+check_exists = [check_exist_airport,check_exist_cities,check_exist_population,check_exist_race,check_exist_immigration_port,check_exist_weather,check_exist_immigration]

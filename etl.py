@@ -14,7 +14,7 @@ from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, dat
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType, LongType
 from pyspark.sql import types as T
 from pyspark.sql import functions as F
-from sql_queries import copy_table_queries, sql_counts
+from sql_queries import copy_table_queries, sql_counts, check_exists
 
 
 
@@ -178,6 +178,44 @@ def load_tables(cur, conn):
     for query in copy_table_queries:
         cur.execute(query)
         conn.commit()
+        
+def check_tables_exist(cur, conn):
+    
+    """
+        Description: This function is responsible for checking that each tables have been properly created.
+
+        Arguments:
+            cur: the cursor object.
+            conn: connection string
+
+        Returns:
+            None
+    """
+    i = 0
+    
+    for query in check_exists:
+        cur.execute(query)
+        
+        query = query.split()
+        word = query[-1]
+        table_name = word[:-3]
+        table_name = table_name[1:]
+
+        result=cur.fetchone()
+        
+        if result[0]:
+            print(table_name+" passed quality check for existing table.")
+            i+=1
+        else:
+            print(table_name+ " failed quality check for empty table. The table does not exist !")
+        
+        conn.commit()
+    
+    if i==len(sql_counts):
+        return True
+    else:
+        return False
+        
 
 def check_tables(cur, conn):
     
@@ -186,18 +224,35 @@ def check_tables(cur, conn):
 
         Arguments:
             cur: the cursor object.
-            conn: xxx
+            conn: connection string
 
         Returns:
             None
     """
+    i = 0
     
     for query in sql_counts:
         cur.execute(query)
-        result=cur.fetchone()
-        print(query+" result is : "+str(result[0]))
-        conn.commit()
+        
+        query = query.split()
+        word = query[-1]
+        table_name = word[:-1]
 
+        
+        result=cur.fetchone()
+        
+        if result[0] > 0:
+            print(table_name+" passed quality check for empty table.")
+            i+=1
+        else:
+            print(table_name+ " failed quality check for empty table. The table is empty")
+        
+        conn.commit()
+    
+    if i==len(sql_counts):
+        return True
+    else:
+        return False
         
 def main():
     
@@ -241,7 +296,8 @@ def main():
     
     #load_tables(cur, conn)
     
-    check_tables(cur, conn)
+    #check_tables(cur, conn)
+    check_tables_exist(cur, conn)
     
     
     conn.close()
