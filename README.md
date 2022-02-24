@@ -469,6 +469,19 @@ def check_tables(cur, conn):
 ![image](https://user-images.githubusercontent.com/32632731/155274507-b2562db0-738b-46db-91a3-2f9692531f8b.png)
 
 
+### 4.4 Querying & using the newly created Data Model
+
+Once all checks are passed we can finally control & make sure the new DB and its model are queryable.
+
+#### What port/city do immigrant get in from the most ?
+
+
+
+
+#### What are the top 10 landing airports for B2 visa holders ?
+
+
+
 ## Step 5: Complete Project Write Up
 
 ### Rationale for the choice of tools and technologies for the project.
