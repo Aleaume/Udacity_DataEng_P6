@@ -414,11 +414,63 @@ In this check we want to make sure that all required tables have been created an
 This is typically ran after the create_tables.py script or at any stage when new table are created / edited.
 
 ```python
-SELECT tablename,"column",type FROM pg_table_def WHERE schemaname = 'public';
+
+check_exist_airport = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'airport');"
+check_exist_cities = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'cities');"
+check_exist_population = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'population');"
+check_exist_race = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'race');"
+check_exist_immigration_port = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'immigration_port');"
+check_exist_weather = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'weather');"
+check_exist_immigration = "SELECT EXISTS ( SELECT * FROM information_schema.tables WHERE table_name   = 'immigration');"
 
 ```
 
-![image](https://user-images.githubusercontent.com/32632731/155193564-30fb6b93-365f-4d35-ad76-e9549a55d7da.png)
+
+```python
+
+def check_tables_exist(cur, conn):
+    
+    """
+        Description: This function is responsible for checking that each tables have been properly created.
+
+        Arguments:
+            cur: the cursor object.
+            conn: connection string
+
+        Returns:
+            None
+    """
+    i = 0
+    
+    for query in check_exists:
+        cur.execute(query)
+        
+        query = query.split()
+        word = query[-1]
+        table_name = word[:-3]
+        table_name = table_name[1:]
+
+        result=cur.fetchone()
+        
+        if result[0]:
+            print(table_name+" passed quality check for existing table.")
+            i+=1
+        else:
+            print(table_name+ " failed quality check for empty table. The table does not exist !")
+        
+        conn.commit()
+    
+    if i==len(sql_counts):
+        return True
+    else:
+        return False
+        
+
+
+
+```
+
+![image](https://user-images.githubusercontent.com/32632731/155575410-993cd8c2-f0f0-4cc0-bd37-21631193337a.png)
 
 
 #### Check that table have been populated
